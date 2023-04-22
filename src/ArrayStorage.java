@@ -20,26 +20,31 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
-                return storage[i];
-            }
-        }
-        return null;
+        int index = getIndex(uuid);
+        if (index == -1) return null;
+        return storage[index];
     }
 
     void delete(String uuid) {
-        if (uuid == null) return;
 
-        Resume deleted = get(uuid);
-        if (deleted == null) return;
-
-        int index = Arrays.asList(storage).indexOf(deleted);
+        int index = getIndex(uuid);
         if (index == -1) return;
+
         for (int i = index; i < size - 1; i++)
             storage[i] = storage[i + 1];
 
         storage[--size] = null;
+    }
+
+    private int getIndex(String uuid) {
+        if (uuid == null) return -1;
+
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid.equals(uuid)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
