@@ -20,14 +20,12 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        Resume result = null;
         for (int i = 0; i < size; i++) {
             if (storage[i].uuid.equals(uuid)) {
-                result = storage[i];
-                break;
+                return storage[i];
             }
         }
-        return result;
+        return null;
     }
 
     void delete(String uuid) {
