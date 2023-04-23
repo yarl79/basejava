@@ -6,7 +6,7 @@ import java.util.Objects;
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
-    private int size = 0;
+    private int size;
 
     void clear() {
         for (int i = 0; i < size; i++)
@@ -21,12 +21,10 @@ public class ArrayStorage {
 
     Resume get(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) return null;
-        return storage[index];
+        return (index == -1) ? null : storage[index];
     }
 
     void delete(String uuid) {
-
         int index = getIndex(uuid);
         if (index == -1) return;
 
