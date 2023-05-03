@@ -58,4 +58,12 @@ public class ArrayStorage {
     public int size() {
         return size;
     }
+
+
+    public void update(Resume resume) {
+        int index = getIndex(Objects.requireNonNull(resume.uuid));
+        if (index != -1) {
+            storage[index] = resume;
+        }
+    }
 }
