@@ -2,34 +2,50 @@ package ru.javawebinar.basejava.storage;
 
 import java.util.Arrays;
 import java.util.Objects;
+
 import ru.javawebinar.basejava.model.Resume;
 
 /**
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    private final int STORAGE_CAPACITY = 10000;
+    Resume[] storage = new Resume[STORAGE_CAPACITY];
     private int size;
 
     public void clear() {
-        for (int i = 0; i < size; i++)
-            storage[i] = null;
-        size = 0;
+        Arrays.fill(storage, 0, size, null);
     }
 
 
     public void save(Resume r) {
+        int index = getIndex(r.uuid);
+        if (index != -1) {
+            System.out.println("Resume with uuid " + r.uuid + " already exist");
+            return;
+        } else if (size >= STORAGE_CAPACITY) {
+            System.out.println("Resume storage is overflowed");
+            return;
+        }
+
         storage[size++] = Objects.requireNonNull(r);
     }
 
     public Resume get(String uuid) {
         int index = getIndex(uuid);
-        return (index == -1) ? null : storage[index];
+        if (index == -1) {
+            System.out.println("Resume with uuid " + uuid + " not found");
+            return null;
+        }
+        return storage[index];
     }
 
     public void delete(String uuid) {
         int index = getIndex(uuid);
-        if (index == -1) return;
+        if (index == -1) {
+            System.out.println("Resume with uuid " + uuid + " not found");
+            return;
+        }
 
         for (int i = index; i < size - 1; i++)
             storage[i] = storage[i + 1];
@@ -62,8 +78,9 @@ public class ArrayStorage {
 
     public void update(Resume resume) {
         int index = getIndex(Objects.requireNonNull(resume.uuid));
-        if (index != -1) {
-            storage[index] = resume;
+        if (index == -1) {
+            System.out.println("Resume with uuid " + resume.uuid + " not found");
         }
+        storage[index] = resume;
     }
 }
