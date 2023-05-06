@@ -5,6 +5,8 @@ import java.util.Objects;
 
 import ru.javawebinar.basejava.model.Resume;
 
+import static java.util.Objects.*;
+
 /**
  * Array based storage for Resumes
  */
@@ -22,13 +24,11 @@ public class ArrayStorage {
         int index = getIndex(r.getUuid());
         if (index != -1) {
             System.out.println("Resume with uuid " + r.getUuid() + " already exist");
-            return;
         } else if (size >= STORAGE_CAPACITY) {
             System.out.println("Resume storage is overflowed");
-            return;
+        } else {
+            storage[size++] = requireNonNull(r);
         }
-
-        storage[size++] = Objects.requireNonNull(r);
     }
 
     public Resume get(String uuid) {
@@ -77,7 +77,7 @@ public class ArrayStorage {
 
 
     public void update(Resume resume) {
-        int index = getIndex(Objects.requireNonNull(resume.getUuid()));
+        int index = getIndex(requireNonNull(resume.getUuid()));
         if (index == -1) {
             System.out.println("Resume with uuid " + resume.getUuid() + " not found");
         }
