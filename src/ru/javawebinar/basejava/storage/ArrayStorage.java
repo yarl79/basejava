@@ -51,7 +51,6 @@ public class ArrayStorage {
     }
 
     private int getIndex(String uuid) {
-        if (uuid == null) return -1;
 
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
@@ -74,7 +73,7 @@ public class ArrayStorage {
 
 
     public void update(Resume resume) {
-        int index = getIndex(requireNonNull(resume.getUuid()));
+        int index = getIndex(resume.getUuid());
         if (index == -1) {
             System.out.println("Resume with uuid " + resume.getUuid() + " not found");
         }
