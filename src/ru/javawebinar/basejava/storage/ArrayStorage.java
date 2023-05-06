@@ -44,13 +44,10 @@ public class ArrayStorage {
         int index = getIndex(uuid);
         if (index == -1) {
             System.out.println("Resume with uuid " + uuid + " not found");
-            return;
+        } else {
+            storage[index] = storage[--size];
+            storage[size] = null;
         }
-
-        for (int i = index; i < size - 1; i++)
-            storage[i] = storage[i + 1];
-
-        storage[--size] = null;
     }
 
     private int getIndex(String uuid) {
