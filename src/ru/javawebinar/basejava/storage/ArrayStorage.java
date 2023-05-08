@@ -12,13 +12,12 @@ import static java.util.Objects.*;
  */
 public class ArrayStorage {
     private final int STORAGE_CAPACITY = 10000;
-    Resume[] storage = new Resume[STORAGE_CAPACITY];
+    protected final Resume[] storage = new Resume[STORAGE_CAPACITY];
     private int size;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
     }
-
 
     public void save(Resume r) {
         int index = getIndex(r.getUuid());
@@ -51,7 +50,6 @@ public class ArrayStorage {
     }
 
     private int getIndex(String uuid) {
-
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
