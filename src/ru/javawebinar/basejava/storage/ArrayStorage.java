@@ -9,14 +9,13 @@ import static java.util.Objects.*;
  */
 public class ArrayStorage extends AbstractArrayStorage {
 
-    protected void concreteSave(Resume r, int index) {
-            storage[size++] = requireNonNull(r);
+    protected void saveResume(Resume r, int index) {
+            storage[size] = requireNonNull(r);
     }
 
     @Override
-    protected void concreteDelete(int index) {
-        storage[index] = storage[--size];
-        storage[size] = null;
+    protected void deleteResume(int index) {
+        storage[index] = storage[size - 1];
     }
 
     @Override

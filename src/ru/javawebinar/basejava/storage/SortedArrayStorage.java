@@ -13,17 +13,15 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 
     @Override
-    protected void concreteSave(Resume r, int index) {
+    protected void saveResume(Resume r, int index) {
         int insertedIndex = -index - 1;
         System.arraycopy(storage, insertedIndex, storage, insertedIndex + 1, size - insertedIndex);
         storage[insertedIndex] = r;
-        size++;
     }
 
     @Override
-    protected void concreteDelete(int index) {
+    protected void deleteResume(int index) {
         System.arraycopy(storage, index + 1, storage, index, size - index - 1);
-        storage[--size] = null;
     }
 
 }

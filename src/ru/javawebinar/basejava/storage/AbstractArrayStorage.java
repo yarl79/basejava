@@ -10,7 +10,7 @@ public abstract class AbstractArrayStorage implements Storage {
     protected int size;
 
     @Override
-    public Resume get(String uuid) {
+    final public Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
             System.out.println("Resume with uuid " + uuid + " not found");
@@ -26,14 +26,15 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public void save(Resume r) {
+    final public void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (size >= STORAGE_CAPACITY) {
             System.out.println("Resume storage is overflowed");
         } else if (index >= 0) {
             System.out.println("Resume with uuid " + r.getUuid() + " already exist");
         } else {
-            concreteSave(r, index);
+            saveResume(r, index);
+            size++;
         }
     }
 
@@ -49,7 +50,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public void update(Resume resume) {
+    final public void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index < 0) {
             System.out.println("Resume with uuid " + resume.getUuid() + " not found");
@@ -59,18 +60,20 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     @Override
-    public void delete(String uuid) {
+    final public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
             System.out.println("Resume with uuid " + uuid + " not found");
         } else {
-            concreteDelete(index);
+            deleteResume(index);
+            size --;
+            storage[size] = null;
         }
     }
 
-    protected abstract void concreteSave(Resume r, int index);
+    protected abstract void saveResume(Resume r, int index);
 
-    protected abstract void concreteDelete(int index);
+    protected abstract void deleteResume(int index);
 
     public abstract int getIndex(String uuid);
 }
